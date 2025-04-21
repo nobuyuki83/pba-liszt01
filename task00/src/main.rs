@@ -16,10 +16,7 @@ fn problem0() -> anyhow::Result<()> {
         // position in the pixel coordinate
         let p0 = [150f32, 150f32];
         // position in the pixel coordinate
-        let p1 = [
-            p0[0] + 100f32 * radian.cos(),
-            p0[1] - 100f32 * radian.sin(),
-        ];
+        let p1 = [p0[0] + 100f32 * radian.cos(), p0[1] - 100f32 * radian.sin()];
         // function to draw line into the canvas
         del_canvas::rasterize::line::draw_dda(&mut canvas.data, canvas.width, &p0, &p1, 1);
         canvas.write(); // save current frame
@@ -40,7 +37,7 @@ fn problem1() -> anyhow::Result<()> {
         ],
     )?;
     let num_frame = 60;
-    let mut trajectory = Vec::<[f32;2]>::new();
+    let mut trajectory = Vec::<[f32; 2]>::new();
     for i_frame in 0..num_frame {
         canvas.clear(0); // clear canvas with color_0
         let time = i_frame as f32 / num_frame as f32;
@@ -48,22 +45,28 @@ fn problem1() -> anyhow::Result<()> {
         // center of the image
         let p0 = [150f32, 150f32];
         // center
-        let p1 = [
-            p0[0] + 100f32 * radian.cos(),
-            p0[1] - 100f32 * radian.sin(),
-        ];
+        let p1 = [p0[0] + 100f32 * radian.cos(), p0[1] - 100f32 * radian.sin()];
         del_canvas::rasterize::line::draw_dda(&mut canvas.data, canvas.width, &p0, &p1, 1);
         //-------------------------------
         // write some code below.
-        
+
         // modify the defninition of p2
         let p2 = [
-            p1[0],
-            p1[1],
+            p1[0] + 50f32 * (2f32 * radian).cos(),
+            p1[1] - 50f32 * (2f32 * radian).sin(),
         ];
         del_canvas::rasterize::line::draw_dda(&mut canvas.data, canvas.width, &p1, &p2, 2);
         trajectory.push(p2); // hint
-        // draw trajectoty using for loop below.
+                             // draw trajectoty using for loop below.
+        for i in 0..trajectory.len() - 1 {
+            del_canvas::rasterize::line::draw_dda(
+                &mut canvas.data,
+                canvas.width,
+                &trajectory[i],
+                &trajectory[i + 1],
+                3,
+            );
+        }
 
         // ---------------------
         // no further edit from here
